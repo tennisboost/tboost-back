@@ -39,6 +39,19 @@ def fourDoublesSingles(player1 , player2, player3, player4):
         i+=1
     return games
 
+def sixDoublesSingles(player1 , player2, player3, player4, player5, player6):
+
+    # As there are only 6 games, manually code them (singles and doubles) as per the spreadsheet
+
+    pool = (player1, player2, player3, player4, player5, player6)
+    teams = [player3, player4], [player1, player5], [player1, player4], [player5, player6], [player2, player6], [player2, player3]
+    games = []
+    games += [teams[0],teams[3]],[teams[1],teams[4]],[teams[2],teams[5]]
+    games += [pool[0],pool[1]],[pool[2], pool[3]],[pool[4], pool[5]]
+    return games
+
+
+
 def fourDoublesReturn(jsonPool):
 
     # used to decode JSON then call fourDoubles method
@@ -55,7 +68,17 @@ def fourSinglesReturn(jsonPool):
     matchUp = fourDoublesSingles((pool['players'][0]), (pool['players'][1]), (pool['players'][2]), (pool['players'][3]))
     return matchUp
 
-testCase = '{"players":["Pete","Andy","Jack","Tom"]}'  ###test JSON, not 100% sure if correct
 
+def sixSinglesReturn(jsonPool):
+
+    #used to decode JSON then call sixDoublesSingles method
+
+    pool = json.loads(jsonPool)
+    matchUp = sixDoublesSingles((pool['players'][0]), (pool['players'][1]), (pool['players'][2]), (pool['players'][3]), (pool['players'][4]), (pool['players'][5]))
+    return matchUp
+
+testCase = '{"players":["Pete","Andy","Jack","Tom"]}'  ###test JSON, not 100% sure if correct
+testCase2 = '{"players":["Pete","Andy","Jack","Tom","Federer","Rafael"]}'
 print(fourDoublesReturn(testCase))
 print(fourSinglesReturn(testCase))
+print(sixSinglesReturn(testCase2))
