@@ -2,14 +2,11 @@ import json
 
 ######
 #
-# Very basic first attempt, the two functions fourDoubles and fourDoublesSingles
-# take 4 player names and sort them into matches as per Andy's spreadsheet
-# I have not yet encoded the results as a JSON as I am not sure of the best way yet
+# Functions take 'n' number of players, divides them into groups of 4 or 6 depending on which decode
+# function is called, and then sorts the players into matches as per Andy's round robin spreadsheet
 #
-# I can write additional code to break a list of players up into multiples of four and pass each one to
-# one of these methods or we could do it a different way depending on how the info is passed
-#
-# I still have to write the 6 player method but will be the same as below
+# Andy informed we don't yet need to worry about numbers of players that don't evenly divide
+# into appropriate groups
 #
 #####
 
@@ -57,7 +54,13 @@ def fourDoublesReturn(jsonPool):
     # used to decode JSON then call fourDoubles method
 
     pool = json.loads(jsonPool)
-    matchUp = fourDoubles((pool['players'][0]), (pool['players'][1]), (pool['players'][2]), (pool['players'][3]))
+    i = 0
+    x = int(((len(pool['players'])) / 4)) ### can work with any number of players where n%4=0
+    matchUp = []
+    for y in range(x):
+        matchUp += fourDoubles((pool['players'][i]), (pool['players'][i + 1]), (pool['players'][i + 2]),
+                               (pool['players'][i + 3]))
+        i += 4
     return matchUp
 
 def fourSinglesReturn(jsonPool):
@@ -65,20 +68,41 @@ def fourSinglesReturn(jsonPool):
     #used to decode JSON then call fourDoublesSingles method
 
     pool = json.loads(jsonPool)
-    matchUp = fourDoublesSingles((pool['players'][0]), (pool['players'][1]), (pool['players'][2]), (pool['players'][3]))
+    i = 0
+    x = int(((len(pool['players'])) / 4)) ### can work with any number of players where n%4=0
+    matchUp = []
+    for y in range(x):
+        matchUp += fourDoublesSingles((pool['players'][i]), (pool['players'][i + 1]), (pool['players'][i + 2]),
+                               (pool['players'][i + 3]))
+        i += 4
     return matchUp
-
 
 def sixSinglesReturn(jsonPool):
 
     #used to decode JSON then call sixDoublesSingles method
 
     pool = json.loads(jsonPool)
-    matchUp = sixDoublesSingles((pool['players'][0]), (pool['players'][1]), (pool['players'][2]), (pool['players'][3]), (pool['players'][4]), (pool['players'][5]))
+    i = 0
+    x = int(((len(pool['players'])) / 6)) ### can work with any number of players where n%6=0
+    matchUp = []
+    for y in range(x):
+        matchUp += sixDoublesSingles((pool['players'][i]), (pool['players'][i + 1]), (pool['players'][i + 2]),
+                               (pool['players'][i + 3]), (pool['players'][i + 4]), (pool['players'][i + 5]))
+        i += 6
     return matchUp
 
-testCase = '{"players":["Pete","Andy","Jack","Tom"]}'  ###test JSON, not 100% sure if correct
-testCase2 = '{"players":["Pete","Andy","Jack","Tom","Federer","Rafael"]}'
+
+
+testCase = '{"compName":"Thursday Night Singles","singlesDoubles":"singles","type":"poolDraws","players": ["Roger Federer","Andre Agassi","Andy Murray","Serena Williams","a","b","c","d","e","f","g","h"]}'  ###test JSON 8 players
+testCase2 = '{"compName":"Thursday Night Singles","singlesDoubles":"singles","type":"poolDraws","players": ["Roger Federer","Andre Agassi","Andy Murray","Serena Williams","Tom Hill","Jack Jensen","a","b","c","d","e","f"]}' ###test JSON 12 players
 print(fourDoublesReturn(testCase))
 print(fourSinglesReturn(testCase))
 print(sixSinglesReturn(testCase2))
+
+
+
+
+
+
+
+
