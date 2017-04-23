@@ -8,6 +8,7 @@ import json
 # Andy informed we don't yet need to worry about numbers of players that don't evenly divide
 # into appropriate groups
 #
+# resturns JSON of rounds
 #####
 
 
@@ -61,7 +62,7 @@ def fourDoublesReturn(jsonPool):
         matchUp += fourDoubles((pool['players'][i]), (pool['players'][i + 1]), (pool['players'][i + 2]),
                                (pool['players'][i + 3]))
         i += 4
-    return matchUp
+    return ('{"rounds": %s}' % matchUp)
 
 def fourSinglesReturn(jsonPool):
 
@@ -75,7 +76,7 @@ def fourSinglesReturn(jsonPool):
         matchUp += fourDoublesSingles((pool['players'][i]), (pool['players'][i + 1]), (pool['players'][i + 2]),
                                (pool['players'][i + 3]))
         i += 4
-    return matchUp
+    return ('{"rounds": %s}' % matchUp)
 
 def sixSinglesReturn(jsonPool):
 
@@ -89,7 +90,7 @@ def sixSinglesReturn(jsonPool):
         matchUp += sixDoublesSingles((pool['players'][i]), (pool['players'][i + 1]), (pool['players'][i + 2]),
                                (pool['players'][i + 3]), (pool['players'][i + 4]), (pool['players'][i + 5]))
         i += 6
-    return matchUp
+    return ('{"rounds": %s}' %matchUp)
 
 
 
@@ -98,9 +99,6 @@ testCase2 = '{"compName":"Thursday Night Singles","singlesDoubles":"singles","ty
 print(fourDoublesReturn(testCase))
 print(fourSinglesReturn(testCase))
 print(sixSinglesReturn(testCase2))
-
-
-
 
 
 
