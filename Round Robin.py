@@ -62,7 +62,7 @@ def fourDoublesReturn(jsonPool):
         matchUp += fourDoubles((pool['players'][i]), (pool['players'][i + 1]), (pool['players'][i + 2]),
                                (pool['players'][i + 3]))
         i += 4
-    return ('{"rounds": %s}' % matchUp)
+    return ('{"rounds": %s}' % json.dumps(matchUp))
 
 def fourSinglesReturn(jsonPool):
 
@@ -76,7 +76,7 @@ def fourSinglesReturn(jsonPool):
         matchUp += fourDoublesSingles((pool['players'][i]), (pool['players'][i + 1]), (pool['players'][i + 2]),
                                (pool['players'][i + 3]))
         i += 4
-    return ('{"rounds": %s}' % matchUp)
+    return ('{"rounds": %s}' % json.dumps(matchUp))
 
 def sixSinglesReturn(jsonPool):
 
@@ -90,7 +90,7 @@ def sixSinglesReturn(jsonPool):
         matchUp += sixDoublesSingles((pool['players'][i]), (pool['players'][i + 1]), (pool['players'][i + 2]),
                                (pool['players'][i + 3]), (pool['players'][i + 4]), (pool['players'][i + 5]))
         i += 6
-    return ('{"rounds": %s}' %matchUp)
+    return ('{"rounds": %s}' %json.dumps(matchUp))
 
 
 
