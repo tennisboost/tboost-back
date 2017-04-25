@@ -8,12 +8,13 @@ import json
 # Andy informed we don't yet need to worry about numbers of players that don't evenly divide
 # into appropriate groups
 #
-# resturns JSON of rounds
+# returns DICT of rounds
 #####
 
 
 
 def fourDoubles(player1 , player2, player3, player4):
+    """Takes a pool of 4 players rounds with doubles matchups"""
 
     # As there are only 6 possible team combinations I have simply manually entered the games
     # and returned them as a list, where each sublist is a match and each sub-sublist is a team
@@ -24,7 +25,7 @@ def fourDoubles(player1 , player2, player3, player4):
     return games
 
 def fourDoublesSingles(player1 , player2, player3, player4):
-
+    """Takes a pool of 4 players rounds with doubles and singles matchups"""
     # resuses the code in the above function but adds all 6 possible games
 
     pool = (player1, player2, player3, player4)
@@ -38,6 +39,7 @@ def fourDoublesSingles(player1 , player2, player3, player4):
     return games
 
 def sixDoublesSingles(player1 , player2, player3, player4, player5, player6):
+    """Takes a pool of 6 players rounds with doubles and singles matchups"""
 
     # As there are only 6 games, manually code them (singles and doubles) as per the spreadsheet
 
@@ -50,11 +52,9 @@ def sixDoublesSingles(player1 , player2, player3, player4, player5, player6):
 
 
 
-def fourDoublesReturn(jsonPool):
-
+def fourDoublesReturn(pool):
+    """Takes a pool of n (where n % 4 == 0) players as DICT and returns DICT 'rounds' with doubles matchups"""
     # used to decode JSON then call fourDoubles method
-
-    pool = json.loads(jsonPool)
     i = 0
     x = int(((len(pool['players'])) / 4)) ### can work with any number of players where n%4=0
     matchUp = []
@@ -62,13 +62,11 @@ def fourDoublesReturn(jsonPool):
         matchUp += fourDoubles((pool['players'][i]), (pool['players'][i + 1]), (pool['players'][i + 2]),
                                (pool['players'][i + 3]))
         i += 4
-    return ('{"rounds": %s}' % json.dumps(matchUp))
+    return {'rounds': matchUp}
 
-def fourSinglesReturn(jsonPool):
-
+def fourSinglesReturn(pool):
+    """Takes a pool of n (where n % 4 == 0) players as DICT and returns DICT 'rounds' with singles matchups"""
     #used to decode JSON then call fourDoublesSingles method
-
-    pool = json.loads(jsonPool)
     i = 0
     x = int(((len(pool['players'])) / 4)) ### can work with any number of players where n%4=0
     matchUp = []
@@ -76,13 +74,11 @@ def fourSinglesReturn(jsonPool):
         matchUp += fourDoublesSingles((pool['players'][i]), (pool['players'][i + 1]), (pool['players'][i + 2]),
                                (pool['players'][i + 3]))
         i += 4
-    return ('{"rounds": %s}' % json.dumps(matchUp))
+    return {'rounds': matchUp}
 
-def sixSinglesReturn(jsonPool):
-
+def sixSinglesReturn(pool):
+    """Takes a pool of n (where n % 6 == 0) players as DICT and returns DICT 'rounds' with singles matchups"""
     #used to decode JSON then call sixDoublesSingles method
-
-    pool = json.loads(jsonPool)
     i = 0
     x = int(((len(pool['players'])) / 6)) ### can work with any number of players where n%6=0
     matchUp = []
@@ -90,17 +86,10 @@ def sixSinglesReturn(jsonPool):
         matchUp += sixDoublesSingles((pool['players'][i]), (pool['players'][i + 1]), (pool['players'][i + 2]),
                                (pool['players'][i + 3]), (pool['players'][i + 4]), (pool['players'][i + 5]))
         i += 6
-    return ('{"rounds": %s}' %json.dumps(matchUp))
+    return {'rounds': matchUp}
 
-
-
-testCase = '{"compName":"Thursday Night Singles","singlesDoubles":"singles","type":"poolDraws","players": ["Roger Federer","Andre Agassi","Andy Murray","Serena Williams","a","b","c","d","e","f","g","h"]}'  ###test JSON 8 players
-testCase2 = '{"compName":"Thursday Night Singles","singlesDoubles":"singles","type":"poolDraws","players": ["Roger Federer","Andre Agassi","Andy Murray","Serena Williams","Tom Hill","Jack Jensen","a","b","c","d","e","f"]}' ###test JSON 12 players
+testCase = {"compName":"Thursday Night Singles","singlesDoubles":"singles","type":"poolDraws","players": ["Roger Federer","Andre Agassi","Andy Murray","Serena Williams","a","b","c","d","e","f","g","h"]}  ###test DICT 8 players
+testCase2 = {"compName":"Thursday Night Singles","singlesDoubles":"singles","type":"poolDraws","players": ["Roger Federer","Andre Agassi","Andy Murray","Serena Williams","Tom Hill","Jack Jensen","a","b","c","d","e","f"]} ###test DICT 12 players
 print(fourDoublesReturn(testCase))
 print(fourSinglesReturn(testCase))
 print(sixSinglesReturn(testCase2))
-
-
-
-
-
